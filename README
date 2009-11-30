@@ -1,0 +1,33 @@
+WARNING
+
+Please note: Due to the fact that OpenSocial at VZ is not yet 
+productive, only the Sandbox Wrapper is kind of tested already. 
+The others should work according to specs.
+
+
+INSTALL
+
+1) Download http://code.google.com/p/opensocial-php-client/
+2) Place the Class in src/osapi/providers/
+3) add 
+	require_once "osapiVZProvider.php";
+   to src/osapi/providers/osapiProvider.php
+
+MINIHOWTO
+
+* Check for valid authenticated request:
+
+ 	  http://developer.studivz.net/wiki/index.php/Gadgets.io_%28v0.8%29#Key_management_for_gadgets.io.AuthorizationType.SIGNED
+
+   $oOsapiProvider is one of the vzProviders below - the right one is to be determined according
+   to  $_GET['oauth_consumer_key'];
+   At some later point in the future the correct one will be automatically chosen by osapiVZProvider,
+   but the oauth_consumer_key values are not precisely specified at the time of writing, so please do
+   it manually for now by initializing one of the four specific providers.
+
+   $oRequest = OAuthRequest::from_request();
+   $oSignatureMethod = $oOsapiProvider->getSignatureMethod();
+   $bSignatueValid = $oSignatureMethod->check_signature($request, null, null, $_GET["oauth_signature"]);
+
+
+   
